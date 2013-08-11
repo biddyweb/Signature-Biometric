@@ -1,12 +1,8 @@
 function [datanew, a, b] = moindreCarre(data)
 
     [m, n] = size(data);
-    X = zeros(m,1);
-    Y = zeros(m,1);
-    for i=1:m
-        X(i,1) = data(i,1);
-        Y(i,1) = data(i,2);
-    end
+    X = data(:,1);
+    Y = data(:,2);
     
     % Get mean
     Xbar = mean(X);
