@@ -3,7 +3,6 @@ function [C] = readfle( name )
 %   Detailed explanation goes here
     fid=fopen(name);
     l = textscan(fid,'%n',1);
-    s = l{1};
     C = zeros(s, 7);
     for i=1:s
         temp = textscan(fid, '%n %n %n %n %n %n %n',1);
