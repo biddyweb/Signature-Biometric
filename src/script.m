@@ -1,3 +1,3 @@
 close all;
 clear;
-main('USER1_1.txt','USER1_10.txt');
+main('../data/USER1_1.txt','../data/USER1_10.txt');

@@ -1,6 +1,5 @@
 function [] = main(file1, file2)
 % --------------- Beginning of pre-treatment -----------------------
-    close all;
     mat = readfile(file1);
     
     % Plot the point cloud, unchanged
