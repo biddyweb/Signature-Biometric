@@ -15,9 +15,5 @@ function [datanew] = translate(data)
             datanew(i,j) = data(i,j);
         end
     end
-    % Display points after translation
-    plot(datanew(:,1),datanew(:,2),'r.');
-    % Center of gravity
-    plot(0, 0, 'g*');
 end
 
