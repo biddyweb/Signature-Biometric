@@ -9,8 +9,8 @@ function [datanew] = translate(data)
     
     datanew = zeros(m, n);
     for i = 1:m
-        datanew(i,1) = round(X(i,1)-Xbar);
-        datanew(i,2) = round(Y(i,1)-Ybar);
+        datanew(i,1) = X(i,1)-Xbar;
+        datanew(i,2) = Y(i,1)-Ybar;
         for j=3:n
             datanew(i,j) = data(i,j);
         end

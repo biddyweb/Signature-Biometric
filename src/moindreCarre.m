@@ -27,5 +27,8 @@ function [datanew, a, b] = moindreCarre(data)
     datanew = zeros(m,n);
     datanew(:,1) = X(:,1) * cos(theta) - Y(:,1)*sin(theta);
     datanew(:,2) = X(:,1) * sin(theta) + Y(:,1)*cos(theta);
+    for i=3:n
+        datanew(:,i) = data(:,i);
+    end
 end
 

@@ -5,7 +5,6 @@ function [dataNew] = reduceNbPoints(data)
 
 % Keep first and last points in the reduction
 dataNew(1, :) = data(1, :);
-dataNew(n, :) = data(n, :);
 
 step = 3; % Get a sample every "step" number of points
 currIndex = 2;
@@ -26,6 +25,7 @@ for i = 3:n - 2
         maxIndex = i;
     end
 end
+dataNew(currIndex, :) = data(n, :);
 
 plot(dataNew(:, 1), dataNew(:, 2), 'k*');
 

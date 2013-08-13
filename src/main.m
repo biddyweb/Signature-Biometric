@@ -52,6 +52,10 @@ function [] = main(file1, file2)
     r = [transpose(data2(:, 1));transpose(data2(:, 2))];
     dist = deplacement(data1,data2);
     fprintf('Distance: %i\n', dist);
+    [tmp1, vm1, vmv1, vmh1, vmax1, acc1] = dynamique(data1);
+    [tmp2, vm2, vmv2, vmh2, vmax2, acc2] = dynamique(data2);
     [Dist, D , k ,w] = dtw(t, r);
     fprintf('Distance: %i\n', Dist);
+    figure;
+    plot(data1(:,1),data1(:,2));
 end
