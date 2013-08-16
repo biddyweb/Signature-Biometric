@@ -50,10 +50,16 @@ function [] = main(file1, file2)
     % ----------------- End of pre-treatment ------------------------
     t = [transpose(data1(:,1)); transpose(data1(:,2))];
     r = [transpose(data2(:, 1));transpose(data2(:, 2))];
-    dist = deplacement(data1,data2);
-    fprintf('Distance: %i\n', dist);
-    [tmp1, vm1, vmv1, vmh1, vmax1, acc1] = dynamique(data1);
-    [tmp2, vm2, vmv2, vmh2, vmax2, acc2] = dynamique(data2);
+    [depl1,distTrait1,distrapp1,distXrapp1,distYrapp1,distTanSum1,distTan1] = deplacement(data1);
+    [depl2,distTrait2,distrapp2,distXrapp2,distYrapp2,distTanSum2,distTan2] = deplacement(data2);
+    pres1 = pressure(data1);
+    pres2 = pressure(data2);
+    azi1 = azimuth(data1);
+    azi2 = azimuth(data2);
+    alt1 = altitude(data1);
+    alt2 = altitude(data2);
+    [tp1, vm1, vmv1, vmh1, vmax1, acc1] = dynamique(data1);
+    [tp2, vm2, vmv2, vmh2, vmax2, acc2] = dynamique(data2);
     [Dist, D , k ,w] = dtw(t, r);
     fprintf('Distance: %i\n', Dist);
     figure;
