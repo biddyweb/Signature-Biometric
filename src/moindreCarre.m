@@ -16,8 +16,8 @@ function [datanew, a, b] = moindreCarre(data)
     b = Ybar - a * Xbar;
     
     % Draw ax + b
-    hline = refline(a, b);
-    set(hline,'Color','k')
+    %hline = refline(a, b);
+    %set(hline,'Color','k')
     
     x = 1000;
     y = a * x;

@@ -62,6 +62,11 @@ function [] = main(file1, file2)
     [tp2, vm2, vmv2, vmh2, vmax2, acc2] = dynamique(data2);
     [Dist, D , k ,w] = dtw(t, r);
     fprintf('Distance: %i\n', Dist);
+    dist = distancecurv(data1,data2,distTrait1,distTrait2);
+    fprintf('Distance: %i\n', dist);
     figure;
+    subplot(1, 2, 1);
     plot(data1(:,1),data1(:,2));
+    subplot(1, 2, 2);
+    plot(data2(:,1),data2(:,2));
 end

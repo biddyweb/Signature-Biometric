@@ -57,4 +57,5 @@ while ((n+m)~=2)
     k=k+1;
     w=cat(1,w,[n,m]);
 end
+end
 
