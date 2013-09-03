@@ -1,4 +1,4 @@
 close all;
 clear;
-%main('USER1_1.txt','USER3_18.txt');
-distvect = testTrait();
+%main('USER1_2.txt','USER1_19.txt');
+distvect = testTrait([1], 20);

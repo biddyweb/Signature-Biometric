@@ -1,4 +1,4 @@
-function [C] = readfle( name )
+function [C] = readfile( name )
     fid=fopen(name);
     l = textscan(fid,'%n',1);
     nLines = l{1};
@@ -9,5 +9,6 @@ function [C] = readfle( name )
             C(i,j)=temp{j};
         end
     end
+    fclose(fid);
 end
 

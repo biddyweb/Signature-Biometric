@@ -46,6 +46,8 @@ function [] = main(file1, file2)
     
     % Maxe them have the same bounding box
     [data1, data2] = adaptBoundaries(data1, data2);
+    
+    %[data1, data2] = adjustNbPoint(data1,data2);
    
     % ----------------- End of pre-treatment ------------------------
     t = [transpose(data1(:,1)); transpose(data1(:,2))];
@@ -62,8 +64,12 @@ function [] = main(file1, file2)
     [tp2, vm2, vmv2, vmh2, vmax2, acc2] = dynamique(data2);
     [Dist, D , k ,w] = dtw(t, r);
     fprintf('Distance: %i\n', Dist);
-    dist = distancecurv(data1,data2,distTrait1,distTrait2);
-    fprintf('Distance: %i\n', dist);
+    dist1 = distancecurv(data1,data2,distTrait1,distTrait2);
+    fprintf('Distance: %i\n', dist1);
+    dist2 = distanceTime(data1,data2);
+    fprintf('Distance: %i\n', dist2);
+    fprintf('Distance cumul: %i\n', dist1+dist2+Dist);
+    fprintf('Corel temp: %i\n', abs(correlTemp(data1)-correlTemp(data2)));
     figure;
     subplot(1, 2, 1);
     plot(data1(:,1),data1(:,2));

@@ -1,9 +1,11 @@
-function [distvect] = testTrait()
+function [distvect] = testTrait(vectimg, max)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
     file = 'USER';
-    for i=1:5
-        j=1;
+    s = size(vectimg);
+    for k=1:s(2)
+        i = vectimg(1,k);
+        for j=1:max
             for h=j+1:40
                 mat = readfile(strcat(file,int2str(i),'_',int2str(j),'.txt'));
                 % Plot the point cloud, unchanged
@@ -71,10 +73,11 @@ function [distvect] = testTrait()
                 diffvmax = abs(vmax1-vmax2);
                 [Dist, D , k ,w] = dtw(t, r);
                 dist = distancecurv(data1,data2,distTrait1,distTrait2);
-                distvect(i,h) = struct('Distance',Dist,'DistanceCurv', dist,'DiffPressure',diffpres,'DiffAzimuth',diffazi,'DiffAltitude', diffalt,'DiffAcceleration',diffacc,'DiffTemps',difftp,'DiffVitMoy', diffvm, 'DiffVitHoriz', diffvmh,'DiffVitVert', diffvmv, 'DiffVitMax', diffvmax,'DiffDeplacement',diffdepl,'DiffLongTrait', difftrait,'DiffRapport', diffrapp, 'DiffRapportX', diffXrapp, 'DiffRapportY', diffYrapp,'DiffSommeTan', diffTanSum, 'DiffTan', diffTan);
+                dist2 = distanceTime(data1,data2);
+                distvect(i,j,h) = struct('Distance',Dist,'DistanceCurv', dist, 'DistanceTime', dist2, 'DistanceCum', Dist+dist+dist2,'DiffPressure',diffpres,'DiffAzimuth',diffazi,'DiffAltitude', diffalt,'DiffAcceleration',diffacc,'DiffTemps',difftp,'DiffVitMoy', diffvm, 'DiffVitHoriz', diffvmh,'DiffVitVert', diffvmv, 'DiffVitMax', diffvmax,'DiffDeplacement',diffdepl,'DiffLongTrait', difftrait,'DiffRapport', diffrapp, 'DiffRapportX', diffXrapp, 'DiffRapportY', diffYrapp,'DiffSommeTan', diffTanSum, 'DiffTan', diffTan);
                 figure;
             end
-        %end
+        end
     end
     
 end

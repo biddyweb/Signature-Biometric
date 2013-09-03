@@ -23,7 +23,7 @@ function [depl,distTrait,distrapp,distXrapp,distYrapp,distTanSum,distTan] = depl
         end
         num = num - tmp2;
         den = den - tmp1;
-        distTrait = distTrait + distance(X(i+1,1),X(i),Y(i+1,1),Y(i));
+        distTrait = distTrait + dist(X(i+1,1),X(i),Y(i+1,1),Y(i));
         numX = numX + max(-tmp2,0);
         numY = numY + max(tmp1,0);
         denX = denX + min(-tmp2,0);
@@ -35,7 +35,7 @@ function [depl,distTrait,distrapp,distXrapp,distYrapp,distTanSum,distTan] = depl
     distTan = atan((Y(s(1),1)-Y(1,1))./(X(s(1),1)-X(1,1)));
 end
 
-function d = distance(xa,xb,ya,yb)
+function d = dist(xa,xb,ya,yb)
     d = sqrt((xb-xa)^2+(yb-ya)^2);
 end
 
