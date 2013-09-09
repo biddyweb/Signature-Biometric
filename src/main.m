@@ -9,6 +9,9 @@ function [] = main(file1, file2)
     
     mat = moindreCarre(mat);
     data1 = translate(mat);
+    [n2,r2] = boxcount(data1,'slope');
+    df = -diff(log(n2))./diff(log(r2));
+    disp(['Fractal dimension, Df = ' num2str(mean(df(4:8))) ' +/- ' num2str(std(df(4:8)))]);
     % Display points after translation
     plot(data1(:,1), data1(:,2), 'r.');
     data1 = reduceNbPoints(data1);
@@ -35,6 +38,9 @@ function [] = main(file1, file2)
     
     mat = moindreCarre(mat);
     data2 = translate(mat);
+    [n2,r2] = boxcount(data2,'slope');
+    df = -diff(log(n2))./diff(log(r2));
+    disp(['Fractal dimension, Df = ' num2str(mean(df(4:8))) ' +/- ' num2str(std(df(4:8)))]);
     % Display points after translation
     plot(data2(:,1), data2(:,2), 'r.');
     data2 = reduceNbPoints(data2);
@@ -50,8 +56,12 @@ function [] = main(file1, file2)
     %[data1, data2] = adjustNbPoint(data1,data2);
    
     % ----------------- End of pre-treatment ------------------------
-    t = [transpose(data1(:,1)); transpose(data1(:,2))];
-    r = [transpose(data2(:, 1));transpose(data2(:, 2))];
+    t1 = data1(1,3);
+    t2 = data2(1,3);
+    data1(:,3) = data1(:,3)-t1;
+    data2(:,3) = data2(:,3)-t2;
+    t = [transpose(data1(:,1)); transpose(data1(:,2)); transpose(data1(:,3)); transpose(data1(:,5)); transpose(data1(:,6)); transpose(data1(:,7))];
+    r = [transpose(data2(:, 1));transpose(data2(:,2)); transpose(data2(:,3)); transpose(data2(:,5)); transpose(data2(:,6)); transpose(data2(:,7))];
     [depl1,distTrait1,distrapp1,distXrapp1,distYrapp1,distTanSum1,distTan1] = deplacement(data1);
     [depl2,distTrait2,distrapp2,distXrapp2,distYrapp2,distTanSum2,distTan2] = deplacement(data2);
     pres1 = pressure(data1);

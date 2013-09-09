@@ -14,6 +14,9 @@ function [distvect] = testTrait(vectimg, max)
                 hold on;
                 mat = moindreCarre(mat);
                 data1 = translate(mat);
+                [n2,r2] = boxcount(data1,'slope');
+                df = -diff(log(n2))./diff(log(r2));
+                disp(['Fractal dimension, Df = ' num2str(mean(df(4:8))) ' +/- ' num2str(std(df(4:8)))]);
                 % Display points after translation
                 plot(data1(:,1), data1(:,2), 'r.');
                 data1 = reduceNbPoints(data1);
@@ -30,6 +33,9 @@ function [distvect] = testTrait(vectimg, max)
     
                 mat = moindreCarre(mat);
                 data2 = translate(mat);
+                [n2,r2] = boxcount(data2,'slope');
+                df = -diff(log(n2))./diff(log(r2));
+                disp(['Fractal dimension, Df = ' num2str(mean(df(4:8))) ' +/- ' num2str(std(df(4:8)))]);
                 % Display points after translation
                 plot(data2(:,1), data2(:,2), 'r.');
                 data2 = reduceNbPoints(data2);
