@@ -27,6 +27,6 @@ for i = 3:n - 2
 end
 dataNew(currIndex, :) = data(n, :);
 
-plot(dataNew(:, 1), dataNew(:, 2), 'k*');
+%plot(dataNew(:, 1), dataNew(:, 2), 'k*');
 
 end
