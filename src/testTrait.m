@@ -81,7 +81,8 @@ function [distvect] = testTrait(vectimg, max)
                 dist = distancecurv(data1,data2,distTrait1,distTrait2);
                 dist2 = distanceTime(data1,data2);
                 distvect(i,j,h) = struct('Distance',Dist,'DistanceCurv', dist, 'DistanceTime', dist2, 'DistanceCum', Dist+dist+dist2,'DiffPressure',diffpres,'DiffAzimuth',diffazi,'DiffAltitude', diffalt,'DiffAcceleration',diffacc,'DiffTemps',difftp,'DiffVitMoy', diffvm, 'DiffVitHoriz', diffvmh,'DiffVitVert', diffvmv, 'DiffVitMax', diffvmax,'DiffDeplacement',diffdepl,'DiffLongTrait', difftrait,'DiffRapport', diffrapp, 'DiffRapportX', diffXrapp, 'DiffRapportY', diffYrapp,'DiffSommeTan', diffTanSum, 'DiffTan', diffTan);
-                figure;
+                drawnow;
+                clf reset;
             end
         end
     end
