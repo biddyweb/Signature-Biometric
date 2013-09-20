@@ -1,24 +1,47 @@
 function testDecision(set)
 
-    file = '../data/USER';
+    file = 'USER';
+    other = set + 2;
+    if other > 5
+        other = other - 5;
+    end
     
-    results = zeros(40 * 40, 1);
-    type = zeros(40 * 40, 1);
+    % dtw
+    % fractal dim
+    % length
+    % curviline distances
+    % pressure
+    % diffRapport
+    
+    res_DTW = zeros(1, 1);
+    res_fractalDimension = zeros(1, 1);
+    res_traitLength = zeros(1, 1);
+    res_curvDistance = zeros(1, 1);
+    res_pressure = zeros(1, 1);
+    res_xy = zeros(1, 1);
+    
+    type = zeros(1, 1);
     index = 1;
     
-    for i=10:30
+    %%%% params
+    correctNb = 6;
+    wrongNb = 6;
+    otherNb = 6;
+    
+    for i=1:10
         i
-        for j=10:30
-            j
-           
+        for j=(21 - correctNb):(20 + wrongNb + otherNb)
+
             if i == j || (i > 20 && j > 20)
                 continue;
             end
-            
-            if i <= 20 && j <= 20
-                type(index) = 1;
+
+            if j > (20 + wrongNb)
+                type(index) = 2; % other tested
+            elseif i <= 20 && j <= 20
+                type(index) = 1; % correct tested
             else
-                type(index) = 0;
+                type(index) = 0; % wrong tested
             end
 
             mat = readfile(strcat(file,int2str(set),'_',int2str(i),'.txt'));
@@ -28,6 +51,10 @@ function testDecision(set)
             %hold on;
             mat = moindreCarre(mat);
             data1 = translate(mat);
+            [n2,r2] = boxcount(data1);
+            df = -diff(log(n2)) ./ diff(log(r2));
+            fracDim1 = mean(df(4:8));
+            %disp(['Fractal dimension, Df = ' num2str(mean(df(4:8))) ' +/- ' num2str(std(df(4:8)))])
             % Display points after translation
             %plot(data1(:,1), data1(:,2), 'r.');
             data1 = reduceNbPoints(data1);
@@ -35,7 +62,11 @@ function testDecision(set)
             %hline = refline(0, 0);
             %set(hline,'Color','k');
 
-            mat = readfile(strcat(file,int2str(set),'_',int2str(j),'.txt'));
+            if type(index) == 2
+                mat = readfile(strcat(file,int2str(other),'_',int2str(i),'.txt'));
+            else
+                mat = readfile(strcat(file,int2str(set),'_',int2str(j),'.txt'));
+            end
 
             % Plot the point cloud, unchanged
             %subplot(2, 2, 3), plot(mat(:,1), mat(:,2),'.');
@@ -44,6 +75,10 @@ function testDecision(set)
 
             mat = moindreCarre(mat);
             data2 = translate(mat);
+            [n2,r2] = boxcount(data2);
+            df = -diff(log(n2))./diff(log(r2));
+            fracDim2 = mean(df(4:8));
+            %disp(['Fractal dimension, Df = ' num2str(mean(df(4:8))) ' +/- ' num2str(std(df(4:8)))])
             % Display points after translation
             %plot(data2(:,1), data2(:,2), 'r.');
             data2 = reduceNbPoints(data2);
@@ -86,26 +121,75 @@ function testDecision(set)
             diffacc = abs(acc1-acc2);
             diffvmax = abs(vmax1-vmax2);
             [Dist, D , k ,w] = dtw(t, r);
-            dist = distancecurv(data1,data2,distTrait1,distTrait2);
+            %dist = distancecurv(data1,data2,distTrait1,distTrait2);
             dist2 = distanceTime(data1,data2);
             %distvect(i,j,h) = struct('Distance',Dist,'DistanceCurv', dist, 'DistanceTime', dist2, 'DistanceCum', Dist+dist+dist2,'DiffPressure',diffpres,'DiffAzimuth',diffazi,'DiffAltitude', diffalt,'DiffAcceleration',diffacc,'DiffTemps',difftp,'DiffVitMoy', diffvm, 'DiffVitHoriz', diffvmh,'DiffVitVert', diffvmv, 'DiffVitMax', diffvmax,'DiffDeplacement',diffdepl,'DiffLongTrait', difftrait,'DiffRapport', diffrapp, 'DiffRapportX', diffXrapp, 'DiffRapportY', diffYrapp,'DiffSommeTan', diffTanSum, 'DiffTan', diffTan)
             %drawnow;
             %clf reset;
+            %diffFrac = abs(fracDim1 - fracDim2);
             
-            res = Dist;
-            
-            results(index) = res;
-            
-            hold on;
-            if type(index) == 1
-                plot(index, res, '+g');
-            else
-                plot(index, res, '+r');
-            end
-            
+            res_DTW(index) = Dist;
+            res_fractalDimension(index) = abs(fracDim1 - fracDim2);
+            res_traitLength(index) = abs(distTrait1-distTrait2);
+            res_curvDistance(index) = distancecurv(data1,data2,distTrait1,distTrait2);
+            res_pressure(index) = abs(pres1-pres2);
+            res_xy(index) = abs(distrapp1-distrapp2);
+
             index = index + 1;
         end
     end
+
+    % printing results
     
+    res = [res_DTW', res_fractalDimension', res_traitLength', res_curvDistance', res_pressure', res_xy'];
+    coeffs = [0.5, 0.1, 0.1, 0.1, 0.1, 0.1];
+    
+    norms = mean(res)
+    rn = zeros(size(res))
+    for k=1:size(res, 2)
+       rn(:,k) = res(:,k) / norms(k)
+    end
+
+    trues = zeros(1, 1);
+    t = 1;
+    wrongs = zeros(1, 1);
+    w = 1;
+    
+    hold on;
+    for k=1:size(res_DTW, 2)
+        r = 0;
+        for carac=1:size(res, 2)
+            r = r + coeffs(carac) * rn(carac, k)
+        end
+        if type(k) == 1
+            plot(k, r, '+g');
+            trues(t) = r;
+            t = t + 1;
+        else
+            if type(k) == 0
+                plot(k, r, '+r');
+            else
+                plot(k, r, '+c');
+            end
+            wrongs(w) = r;
+            w = w + 1;
+        end
+    end
+    
+    [~, i] = sort(trues, 'descend');
+    V = trues(i(ceil(2 * size(i, 2) / 100)));
+    
+    err = 0;
+    wrongs_sorted = sort(wrongs);
+    for n=1:size(wrongs, 2)
+       if  wrongs_sorted(n) > V
+          err = (n - 1) / size(wrongs, 2) * 100;
+          break;
+       end
+    end
+   
+    line(xlim, [V V]);
+    V
+    err
 end
 
