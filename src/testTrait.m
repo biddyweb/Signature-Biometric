@@ -9,39 +9,39 @@ function [distvect] = testTrait(vectimg, max)
             for h=j+1:40
                 mat = readfile(strcat(file,int2str(i),'_',int2str(j),'.txt'));
                 % Plot the point cloud, unchanged
-                subplot(2, 2, 1), plot(mat(:,1), mat(:,2),'.');
-                title(strcat('File 1 Set',int2str(i),'_',int2str(j)));
-                hold on;
+                %subplot(2, 2, 1), plot(mat(:,1), mat(:,2),'.');
+                %title(strcat('File 1 Set',int2str(i),'_',int2str(j)));
+                %hold on;
                 mat = moindreCarre(mat);
                 data1 = translate(mat);
                 [n2,r2] = boxcount(data1,'slope');
                 df = -diff(log(n2))./diff(log(r2));
-                disp(['Fractal dimension, Df = ' num2str(mean(df(4:8))) ' +/- ' num2str(std(df(4:8)))]);
+                %disp(['Fractal dimension, Df = ' num2str(mean(df(4:8))) ' +/- ' num2str(std(df(4:8)))]);
                 % Display points after translation
-                plot(data1(:,1), data1(:,2), 'r.');
+                %plot(data1(:,1), data1(:,2), 'r.');
                 data1 = reduceNbPoints(data1);
                 showBoundingBox(data1);
-                hline = refline(0, 0);
-                set(hline,'Color','k');
+                %hline = refline(0, 0);
+                %set(hline,'Color','k');
             
                 mat = readfile(strcat(file,int2str(i),'_',int2str(h),'.txt'));
     
                 % Plot the point cloud, unchanged
-                subplot(2, 2, 3), plot(mat(:,1), mat(:,2),'.');
-                title(strcat('File 2 Set',int2str(i),' _ ',int2str(h)));
-                hold on;
+                %subplot(2, 2, 3), plot(mat(:,1), mat(:,2),'.');
+                %title(strcat('File 2 Set',int2str(i),' _ ',int2str(h)));
+                %hold on;
     
                 mat = moindreCarre(mat);
                 data2 = translate(mat);
                 [n2,r2] = boxcount(data2,'slope');
                 df = -diff(log(n2))./diff(log(r2));
-                disp(['Fractal dimension, Df = ' num2str(mean(df(4:8))) ' +/- ' num2str(std(df(4:8)))]);
+                %disp(['Fractal dimension, Df = ' num2str(mean(df(4:8))) ' +/- ' num2str(std(df(4:8)))]);
                 % Display points after translation
                 plot(data2(:,1), data2(:,2), 'r.');
                 data2 = reduceNbPoints(data2);
                 showBoundingBox(data2);
                 hline = refline(0, 0);
-                set(hline,'Color','k');
+                %set(hline,'Color','k');
     
                 % --- Shared pre-treatment ---
     
