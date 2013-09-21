@@ -11,6 +11,8 @@
 \usepackage{chngpage}
 \usepackage{fancyhdr}
 \usepackage{fancybox}
+\usepackage[Sonny]{fncychap}
+\usepackage{titlesec, blindtext, color}
 \usepackage{lastpage}
 
 \setcounter{tocdepth}{3}
@@ -19,6 +21,10 @@
 \renewcommand\headrulewidth{1pt}
 \fancyhead[L]{Signature}
 \fancyhead[R]{EPITA}
+\definecolor{gray75}{gray}{0.75}
+\newcommand{\hsp}{\hspace{20pt}}
+
+\titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
 
 \renewcommand\footrulewidth{1pt}
 \fancyfoot[L]{Signature}
@@ -59,21 +65,33 @@
 
 \tableofcontents
 
-\section{Dimension fractale}
-La signature d'un individu est caractérisé par de multiple éléments qui ne sont pas discernable a l'œil nue.\\
+\newpage
 
-Pour extraire ces caractéristiques, on peut calculer la dimension fractale qui d'après la définition permet d'obtenir une grandeur qui va traduire la façon dont un ensemble fractal de remplir l'espace.\\
+\chapter{Dimension fractale}
+La signature d'un individu est caractérisé par de multiple éléments qui ne sont pas discernable à l'œil nue.\\
 
-De plus, selon Mandelbrot, la dimension fractal permet de quantifier la complexité d'une courbe.
-C'est cette dernière qui nous intéressé pour la reconnaissance de signature.\\
+Pour extraire ces caractéristiques, on peut calculer la dimension fractale qui d'après la définition permet d'obtenir une grandeur qui va traduire la façon dont un ensemble va remplir l'espace.\\
 
-Il existe de multiple définition de cette dimension (Hausdorff, Homothetie, Minkowski-Bouligand).C'est cette dernière que nous utilisons, elle est aussi appelle "Box-Counting".\\
+De plus, selon Mandelbrot, la dimension fractale permet de quantifier la complexité d'une courbe. C'est cette dernière qui nous intéressé pour la reconnaissance de signature.\\
+
+Il existe de multiple définition de cette dimension, Hausdorff, homothétie, Minkowski-Bouligand. C'est cette dernière que nous utilisons, elle est aussi appelle "Box-Counting".\\
 
 Cette technique est la plus utilisé et permet de mesurer numériquement la dimension fractale. Cela se fait via la formule suivante:
+
+\vspace{0.3cm}
 \begin{center}
 \Ovalbox{$D_{box} = \lim\limits_{\epsilon \rightarrow 0}(\frac{log N(\epsilon)}{log N(1/\epsilon)})$ avec $N(\epsilon)$ nombre d'élément de diamètre $\epsilon$}
 \end{center}
+\vspace{0.3cm}
 
-La méthode de Minkowski-Bouligand va recouvrir et créer un réseau de cube N fois sur la forme que l'on va analyser, N allant jusqu'à $+\infty$. En étudiant le comportement de ce réseau on va pouvoir calculer la dimension fractale.
+La méthode de Minkowski-Bouligand va recouvrir et créer un réseau de cube N fois sur la forme que l'on va analyser, N allant jusqu'à $+\infty$. En étudiant le comportement de ce réseau on va pouvoir calculer la dimension fractale.\\
+
+\begin{figure}[!h]
+	\begin{center}
+		\includegraphics[scale=0.28]{images/Great_Britain_Box.png}
+	\end{center}
+\end{figure}
+
+Grâce à cela nous pouvons donc avoir un facteur supplémentaire pour déterminer s'il y a contrefaçon ou non.
 
 \end{document}
