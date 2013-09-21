@@ -1,0 +1,66 @@
+\documentclass[pdftex,12pt,a4paper]{report}
+\usepackage[pdftex]{graphicx}
+\usepackage[francais]{babel} 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[top=2cm, bottom=2cm, left=3cm, right=3cm]{geometry}
+\usepackage{graphicx}
+\usepackage[toc,page]{appendix} 
+\usepackage{pdfpages}
+\usepackage{color}
+\usepackage{chngpage}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3} 
+\setlength{\headheight}{14pt}
+\renewcommand\headrulewidth{1pt}
+\fancyhead[L]{Signature}
+\fancyhead[R]{EPITA}
+
+\renewcommand\footrulewidth{1pt}
+\fancyfoot[L]{Signature}
+\fancyfoot[R]{Page \thepage/\pageref{LastPage}}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\pagestyle{fancy}
+
+\begin{document}
+\begin{titlepage}
+\begin{center}
+\textsc{\LARGE Géopolitique}\\[1.5cm]
+
+% Title
+\HRule \\[0.4cm]
+{\huge \bfseries Mexique}\\[0.4cm]
+\HRule \\[1.5cm]
+\end{center}
+
+% Author and supervisor
+\begin{minipage}{0.4\textwidth}
+	\begin{flushleft} \large
+		\emph{Auteurs:}\\
+			Victor \textsc{Degliame} \\
+			Tanguy \textsc{Abel} \\
+			Thibault \textsc{Lapassade} \\
+			Florian \textsc{Thomassin} \\
+	\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+	\begin{flushright} \large
+		\emph{Relecture:} \\
+              Reda \textsc{Dehak}
+	\end{flushright}
+\end{minipage}
+\end{titlepage}
+
+\tableofcontents
+
+\section{Dimension fractale}
+La signature d'un individu est caractérisé par de multiple éléments qui ne sont pas discernable a l'œil nue.\\
+
+
+
+\end{document}
