@@ -10,6 +10,7 @@
 \usepackage{color}
 \usepackage{chngpage}
 \usepackage{fancyhdr}
+\usepackage{fancybox}
 \usepackage{lastpage}
 
 \setcounter{tocdepth}{3}
@@ -61,6 +62,18 @@
 \section{Dimension fractale}
 La signature d'un individu est caractérisé par de multiple éléments qui ne sont pas discernable a l'œil nue.\\
 
+Pour extraire ces caractéristiques, on peut calculer la dimension fractale qui d'après la définition permet d'obtenir une grandeur qui va traduire la façon dont un ensemble fractal de remplir l'espace.\\
 
+De plus, selon Mandelbrot, la dimension fractal permet de quantifier la complexité d'une courbe.
+C'est cette dernière qui nous intéressé pour la reconnaissance de signature.\\
+
+Il existe de multiple définition de cette dimension (Hausdorff, Homothetie, Minkowski-Bouligand).C'est cette dernière que nous utilisons, elle est aussi appelle "Box-Counting".\\
+
+Cette technique est la plus utilisé et permet de mesurer numériquement la dimension fractale. Cela se fait via la formule suivante:
+\begin{center}
+\Ovalbox{$D_{box} = \lim\limits_{\epsilon \rightarrow 0}(\frac{log N(\epsilon)}{log N(1/\epsilon)})$ avec $N(\epsilon)$ nombre d'élément de diamètre $\epsilon$}
+\end{center}
+
+La méthode de Minkowski-Bouligand va recouvrir et créer un réseau de cube N fois sur la forme que l'on va analyser, N allant jusqu'à $+\infty$. En étudiant le comportement de ce réseau on va pouvoir calculer la dimension fractale.
 
 \end{document}
