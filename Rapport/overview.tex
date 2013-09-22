@@ -1,4 +1,4 @@
-\documentclass[fontsize=11pt, twoside=no]{scrartcl} % KOMA class
+\documentclass[fontsize=12pt, twoside=no]{scrartcl} % KOMA class
 
 % other packages %
 %\usepackage{graphicx}
@@ -14,9 +14,9 @@
 %\usepackage[unicode,hidelinks]{hyperref}
 
 % mise en page %
-\pagestyle{headings}
-\KOMAoptions{parskip=half*}
-\KOMAoptions{paper=a4,DIV=13}
+\pagestyle{empty}
+\KOMAoptions{parskip=false}
+\KOMAoptions{paper=a4,DIV=21}
 
 \addto\captionsfrench{\def\partname{}}
 \renewcommand{\thepart}{}
@@ -63,7 +63,7 @@
 \author{Tanguy \textsc{Abel} - Victor \textsc{Degliame}\\Thibault \textsc{Lapassade} - Florian \textsc{Thomassin}}
 \date{}
 \maketitle
-\vspace*{-2cm}
+\vspace*{-3cm}
 
 %\begin{titlepage}
 %\begin{center}
@@ -95,11 +95,33 @@
 
 %\tableofcontents
 
+\part{}
 
-\part{Mise à l’échelle}
+Le but de ce projet est de déterminer l'authenticité d'une signature numérique. Pour cela, on distinguera deux phases :
 
+\begin{description}
+\item[L'apprentissage] au cours duquel un utilisateur réalise une ou plusieurs signatures qui serviront de références ;
+\item[Le traitement] au cours duquel la signature réalisée par un utilisateur est comparée aux références disponibles pour établir son authenticité.
+\end{description}
 
-\part{Dimension fractale}
+On ne s'intéressera dans ce compte-rendu qu'à la description de la phase de traitement, la phase d'apprentissage ne consistant qu'à enregistrer les données d'acquisition d'une ou plusieurs signatures de référence pour pouvoir les utiliser lors du traitement.
+
+Notre système est réalisé à l'aide de Matlab. Le format d'entrée des données d'acquisition est fixé et n'est pas le sujet d'étude de ce compte-rendu. On s'attardera plutôt à détailler l'implémentation qui se décompose en plusieurs étapes distinctes : pré-traitement des données, étude des paramètres, décision.
+
+\part{Pré-traitements}
+
+\section{Mise à l'échelle}
+\section{Réduction des points}
+
+\part{Paramètres retenus pour la discrimination}
+
+\section{Dynamic Time Warping}
+
+C'est une méthode consistant à calculer la distance entre deux séries de valeurs. Elle est majoritairement utilisé dans le domaine de la reconnaissance de la parole mais dans notre cas, nous avons utilisé cette méthode pour calculer la distance entre les deux signatures que nous avions en entrée à partir de composantes extraites de ces images. \\
+
+Nous avons préféré utiliser cette méthode plutôt que celle des HMM ou des GMM car d'après ce que nous avons pu trouvé lors de nos recherches, c'était celle-ci qui revenait le plus souvent comme la plus efficiente pour comparer deux signatures pouvant ne pas avoir le même nombre de points. La distance qui nous est renvoyé par notre DTW est partis prenante dans le choix que nous faisons ensuite pour dire si oui ou non les deux signatures appartiennent à la même personne ou non puisque nous avons remarqué empiriquement que cette distance est plus représentative de la personne qui a fait la signature que les autres caractéristiques que l'on pouvait extraire mais également parce que nos recherches nous ont conduit à confirmer cette information. Néanmoins, dans certains cas, cette distance n'est pas suffisante et il faut donc utiliser d'autres informations que celle-ci pour la comparaison.
+
+\section{Dimension fractale}
 La signature d'un individu est caractérisé par de multiple éléments qui ne sont pas discernable à l'œil nue.\\
 
 Pour extraire ces caractéristiques, on peut calculer la dimension fractale qui d'après la définition permet d'obtenir une grandeur qui va traduire la façon dont un ensemble va remplir l'espace.\\
@@ -115,12 +137,6 @@ Cette technique est la plus utilisé et permet de mesurer numériquement la dime
 \Ovalbox{$D_{box} = \lim\limits_{\epsilon \rightarrow 0}(\frac{log N(\epsilon)}{log N(1/\epsilon)})$ avec $N(\epsilon)$ nombre d'élément de diamètre $\epsilon$}
 \end{center}
 
-\newpage
-
-\part{DTW}
-C'est une méthode consistant à calculer la distance entre deux séries de valeurs. Elle est majoritairement utilisé dans le domaine de la reconnaissance de la parole mais dans notre cas, nous avons utilisé cette méthode pour calculer la distance entre les deux signatures que nous avions en entrée à partir de composantes extraites de ces images. \\
-
-Nous avons préféré utiliser cette méthode plutôt que celle des HMM ou des GMM car d'après ce que nous avons pu trouvé lors de nos recherches, c'était celle-ci qui revenait le plus souvent comme la plus efficiente pour comparer deux signatures pouvant ne pas avoir le même nombre de points. La distance qui nous est renvoyé par notre DTW est partis prenante dans le choix que nous faisons ensuite pour dire si oui ou non les deux signatures appartiennent à la même personne ou non puisque nous avons remarqué empiriquement que cette distance est plus représentative de la personne qui a fait la signature que les autres caractéristiques que l'on pouvait extraire mais également parce que nos recherches nous ont conduit à confirmer cette information. Néanmoins, dans certains cas, cette distance n'est pas suffisante et il faut donc utiliser d'autres informations que celle-ci pour la comparaison.
 
 \part{Décision}
 
