@@ -67,6 +67,10 @@
 
 \newpage
 
+\chapter{Mise à l’échelle}
+
+\newpage
+
 \chapter{Dimension fractale}
 La signature d'un individu est caractérisé par de multiple éléments qui ne sont pas discernable à l'œil nue.\\
 
@@ -93,5 +97,16 @@ La méthode de Minkowski-Bouligand va recouvrir et créer un réseau de cube N f
 \end{figure}
 
 Grâce à cela nous pouvons donc avoir un facteur supplémentaire pour déterminer s'il y a contrefaçon ou non.
+
+\newpage
+
+\chapter{DTW}
+C'est une méthode consistant à calculer la distance entre deux séries de valeurs. Elle est majoritairement utilisé dans le domaine de la reconnaissance de la parole mais dans notre cas, nous avons utilisé cette méthode pour calculer la distance entre les deux signatures que nous avions en entrée à partir de composantes extraites de ces images. \\
+
+Nous avons préféré utiliser cette méthode plutôt que celle des HMM ou des GMM car d'après ce que nous avons pu trouvé lors de nos recherches, c'était celle-ci qui revenait le plus souvent comme la plus efficiente pour comparer deux signatures pouvant ne pas avoir le même nombre de points. La distance qui nous est renvoyé par notre DTW est partis prenante dans le choix que nous faisons ensuite pour dire si oui ou non les deux signatures appartiennent à la même personne ou non puisque nous avons remarqué empiriquement que cette distance est plus représentative de la personne qui a fait la signature que les autres caractéristiques que l'on pouvait extraire mais également parce que nos recherches nous ont conduit à confirmer cette information. Néanmoins, dans certains cas, cette distance n'est pas suffisante et il faut donc utiliser d'autres informations que celle-ci pour la comparaison.
+
+\chapter{Décision}
+
+\newpage
 
 \end{document}
