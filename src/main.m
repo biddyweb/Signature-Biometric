@@ -58,10 +58,10 @@ function [] = main(file1, file2)
     % ----------------- End of pre-treatment ------------------------
     t1 = data1(1,3);
     t2 = data2(1,3);
-    data1(:,3) = data1(:,3)-t1;
-    data2(:,3) = data2(:,3)-t2;
-    t = [transpose(data1(:,1)); transpose(data1(:,2)); transpose(data1(:,3)); transpose(data1(:,5)); transpose(data1(:,6)); transpose(data1(:,7))];
-    r = [transpose(data2(:, 1));transpose(data2(:,2)); transpose(data2(:,3)); transpose(data2(:,5)); transpose(data2(:,6)); transpose(data2(:,7))];
+    datatmp1(:,3) = data1(:,3)-t1;
+    datatmp2(:,3) = data2(:,3)-t2;
+    t = [transpose(data1(:,1)); transpose(data1(:,2)); transpose(datatmp1(:,3)); transpose(data1(:,5)); transpose(data1(:,6)); transpose(data1(:,7))];
+    r = [transpose(data2(:, 1));transpose(data2(:,2)); transpose(datatmp2(:,3)); transpose(data2(:,5)); transpose(data2(:,6)); transpose(data2(:,7))];
     [depl1,distTrait1,distrapp1,distXrapp1,distYrapp1,distTanSum1,distTan1] = deplacement(data1);
     [depl2,distTrait2,distrapp2,distXrapp2,distYrapp2,distTanSum2,distTan2] = deplacement(data2);
     pres1 = pressure(data1);
