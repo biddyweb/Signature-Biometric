@@ -110,8 +110,16 @@ Notre système est réalisé à l'aide de Matlab. Le format d'entrée des donné
 
 \part{Pré-traitements}
 
-\section{Mise à l'échelle}
+\section{Normalisation}
+
+Afin de palier aux problèmes qui se présentent lorsque nous étudions des signatures obtenues dans des conditions différentes (résolution ou temps d'échantillonnage différents pour chaque tablette, état d'esprit de l'utilisateur, ...), il est important de normaliser les données.
+
+Pour ce faire, nous souhaitons en premier lieu trouver le barycentre de chaque signature et le placer à l'origine du repère. Il faut ensuite s'assurer que les dimensions des signatures soient dans le même ordre de grandeur. Enfin, effectuer une rotation des signatures de façon à ce que l'axe d'inertie soit le même pour toutes, horizontal.
+
 \section{Réduction des points}
+
+De façon à supprimer le bruit et à accélérer (voire améliorer) le traitement, il est intéressant de réduire le nombre de points utilisés. Ici nous utilisons la méthode de la vitesse minimale qui nous permet de sélectionner des points qui préservent la forme et la dimension de la signature tout en supprimant les informations superflues.
+La sélection de ces points se fait sur une étude de voisinage. Le point se trouvant à l'angle le plus aiguë dans un ensemble de points contigus est gardé tandis que les autres sont mis de côtés.
 
 \part{Paramètres retenus pour la discrimination}
 
@@ -122,15 +130,15 @@ C'est une méthode consistant à calculer la distance entre deux séries de vale
 Nous avons préféré utiliser cette méthode plutôt que celle des HMM ou des GMM car d'après ce que nous avons pu trouvé lors de nos recherches, c'était celle-ci qui revenait le plus souvent comme la plus efficiente pour comparer deux signatures pouvant ne pas avoir le même nombre de points. La distance qui nous est renvoyé par notre DTW est partis prenante dans le choix que nous faisons ensuite pour dire si oui ou non les deux signatures appartiennent à la même personne ou non puisque nous avons remarqué empiriquement que cette distance est plus représentative de la personne qui a fait la signature que les autres caractéristiques que l'on pouvait extraire mais également parce que nos recherches nous ont conduit à confirmer cette information. Néanmoins, dans certains cas, cette distance n'est pas suffisante et il faut donc utiliser d'autres informations que celle-ci pour la comparaison.
 
 \section{Dimension fractale}
-La signature d'un individu est caractérisé par de multiple éléments qui ne sont pas discernable à l'œil nue.\\
+La signature d'un individu est caractérisée par de multiple éléments qui ne sont pas discernables à l'œil nu.\\
 
-Pour extraire ces caractéristiques, on peut calculer la dimension fractale qui d'après la définition permet d'obtenir une grandeur qui va traduire la façon dont un ensemble va remplir l'espace.\\
+Pour extraire ces caractéristiques, on peut calculer la dimension fractale qui, d'après la définition, permet d'obtenir une grandeur qui va traduire la façon dont un ensemble va remplir l'espace.\\
 
-De plus, selon Mandelbrot, la dimension fractale permet de quantifier la complexité d'une courbe. C'est cette dernière qui nous intéressé pour la reconnaissance de signature.\\
+De plus, selon Mandelbrot, la dimension fractale permet de quantifier la complexité d'une courbe. C'est cette dernière qui nous intéresse pour la reconnaissance de signature.\\
 
-Il existe de multiple définition de cette dimension, Hausdorff, homothétie, Minkowski-Bouligand. C'est cette dernière que nous utilisons, elle est aussi appelle "Box-Counting".\\
+Il existe de multiple définitions de cette dimension, Hausdorff, homothétie, Minkowski-Bouligand. C'est cette dernière que nous utilisons, elle est aussi appelée "Box-Counting".\\
 
-Cette technique est la plus utilisé et permet de mesurer numériquement la dimension fractale. Cela se fait via la formule suivante:
+Cette technique est la plus utilisée et permet de mesurer numériquement la dimension fractale. Cela se fait via la formule suivante:
 
 \vspace{0.3cm}
 \begin{center}
