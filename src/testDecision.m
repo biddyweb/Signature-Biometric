@@ -33,7 +33,7 @@ function testDecision(set)
         for j=(21 - correctNb):(20 + wrongNb + otherNb)
 
             if i == j || (i > 20 && j > 20)
-                continue;
+              continue;
             end
 
             if j > (20 + wrongNb)
@@ -144,7 +144,7 @@ function testDecision(set)
     %res = [res_DTW', res_fractalDimension', res_traitLength', res_curvDistance', res_pressure', res_xy'];
     %coeffs = [0.1, 0.5, 0.1, 0.1, 0.1, 0.1];
     
-    %norms = mean(res)
+    %norms = mean(res)f
     %rn = zeros(size(res))
     %for k=1:size(res, 2)
     %   rn(:,k) = res(:,k) / norms(k)
@@ -159,7 +159,7 @@ function testDecision(set)
 
     subplot(2, 3, 1);
     hold on;
-    title('DTW');
+    title(strcat('DTW: ', num2str(mean(res_DTW(find(type == 1))))));
     plot(find(type == 1), res_DTW(find(type == 1)), '+g');
     plot(find(type == 0), res_DTW(find(type == 0)), '+r');
     plot(find(type == 2), res_DTW(find(type == 2)), '+c');
@@ -167,7 +167,7 @@ function testDecision(set)
     
     subplot(2, 3, 2);
     hold on;
-    title('fractal dimension');
+    title(strcat('fractalDimension: ', num2str(mean(res_fractalDimension(find(type == 1))))));
     plot(find(type == 1), res_fractalDimension(find(type == 1)), '+g');
     plot(find(type == 0), res_fractalDimension(find(type == 0)), '+r');
     plot(find(type == 2), res_fractalDimension(find(type == 2)), '+c');
@@ -175,15 +175,15 @@ function testDecision(set)
     
     subplot(2, 3, 3);
     hold on;
-    title('trait length');
+    title(strcat('trait length: ', num2str(mean(res_traitLength(find(type == 1))))));
     plot(find(type == 1), res_traitLength(find(type == 1)), '+g');
     plot(find(type == 0), res_traitLength(find(type == 0)), '+r');
     plot(find(type == 2), res_traitLength(find(type == 2)), '+c');
     hold off;
     
-    subplot(2, 3, 4);
+    subplot(2, 3, 4); 
     hold on;
-    title('curviline distance');
+    title(strcat('curviline distance: ', num2str(mean(res_curvDistance(find(type == 1))))));
     plot(find(type == 1), res_curvDistance(find(type == 1)), '+g');
     plot(find(type == 0), res_curvDistance(find(type == 0)), '+r');
     plot(find(type == 2), res_curvDistance(find(type == 2)), '+c');
@@ -191,7 +191,7 @@ function testDecision(set)
     
     subplot(2, 3, 5);
     hold on;
-    title('pressure');
+    title(strcat('pressure: ', num2str(mean(res_pressure(find(type == 1))))));
     plot(find(type == 1), res_pressure(find(type == 1)), '+g');
     plot(find(type == 0), res_pressure(find(type == 0)), '+r');
     plot(find(type == 2), res_pressure(find(type == 2)), '+c');
@@ -199,7 +199,7 @@ function testDecision(set)
     
     subplot(2, 3, 6);
     hold on;
-    title('x on y moves ratio');
+    title(strcat('x/y: ', num2str(mean(res_xy(find(type == 1))))));
     plot(find(type == 1), res_xy(find(type == 1)), '+g');
     plot(find(type == 0), res_xy(find(type == 0)), '+r');
     plot(find(type == 2), res_xy(find(type == 2)), '+c');
