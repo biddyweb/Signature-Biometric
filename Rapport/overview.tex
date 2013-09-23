@@ -1,4 +1,4 @@
-\documentclass[fontsize=12pt, twoside=no]{scrartcl} % KOMA class
+\documentclass[fontsize=10pt, twoside=no]{scrartcl} % KOMA class
 
 % other packages %
 %\usepackage{graphicx}
@@ -16,46 +16,11 @@
 % mise en page %
 \pagestyle{empty}
 \KOMAoptions{parskip=false}
-\KOMAoptions{paper=a4,DIV=21}
+\KOMAoptions{paper=a4,DIV=22}
 
 \addto\captionsfrench{\def\partname{}}
 \renewcommand{\thepart}{}
 %%%%%%%%%%%%%%
-
-%\documentclass[pdftex,12pt,a4paper]{report}
-%\usepackage[pdftex]{graphicx}
-%\usepackage[francais]{babel}
-%\usepackage[utf8]{inputenc}
-%\usepackage[T1]{fontenc}
-%\usepackage[top=2cm, bottom=2cm, left=3cm, right=3cm]{geometry}
-%\usepackage{graphicx}
-%\usepackage[toc,page]{appendix}
-%\usepackage{pdfpages}
-%\usepackage{color}
-%\usepackage{chngpage}
-%\usepackage{fancyhdr}
-%\usepackage[Sonny]{fncychap}
-%\usepackage{titlesec, blindtext, color}
-%\usepackage{lastpage}
-
-%\setcounter{tocdepth}{3}
-%\setcounter{secnumdepth}{3}
-%\setlength{\headheight}{14pt}
-%\renewcommand\headrulewidth{1pt}
-%\fancyhead[L]{Signature}
-%\fancyhead[R]{EPITA}
-%\definecolor{gray75}{gray}{0.75}
-%\newcommand{\hsp}{\hspace{20pt}}
-
-%\titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
-
-%\renewcommand\footrulewidth{1pt}
-%\fancyfoot[L]{Signature}
-%\fancyfoot[R]{Page \thepage/\pageref{LastPage}}
-
-%\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
-
-%\pagestyle{fancy}
 
 \begin{document}
 
@@ -64,36 +29,6 @@
 \date{}
 \maketitle
 \vspace*{-3cm}
-
-%\begin{titlepage}
-%\begin{center}
-%\textsc{\LARGE Signature}\\[1.5cm]
-
-% Title
-%\HRule \\[0.4cm]
-%{\huge \bfseries Signature}\\[0.4cm]
-%\HRule \\[1.5cm]
-%\end{center}
-
-% Author and supervisor
-%\begin{minipage}{0.4\textwidth}
-%	\begin{flushleft} \large
-%		\emph{Auteurs:}\\
-%			Victor \textsc{Degliame} \\
-%			Tanguy \textsc{Abel} \\
-%			Thibault \textsc{Lapassade} \\
-%			Florian \textsc{Thomassin} \\
-%	\end{flushleft}
-%\end{minipage}
-%\begin{minipage}{0.4\textwidth}
-%	\begin{flushright} \large
-%		\emph{Relecture:} \\
-%              Reda \textsc{Dehak}
-%	\end{flushright}
-%\end{minipage}
-%\end{titlepage}
-
-%\tableofcontents
 
 \part{}
 
@@ -104,7 +39,7 @@ Le but de ce projet est de déterminer l'authenticité d'une signature numériqu
 \item[Le traitement] au cours duquel la signature réalisée par un utilisateur est comparée aux références disponibles pour établir son authenticité.
 \end{description}
 
-On ne s'intéressera dans ce compte-rendu qu'à la description de la phase de traitement, la phase d'apprentissage ne consistant qu'à enregistrer les données d'acquisition d'une ou plusieurs signatures de référence pour pouvoir les utiliser lors du traitement.
+La phase d'apprentissage ne consiste qu'à enregistrer les données d'acquisition d'une ou plusieurs signatures de référence pour pouvoir les utiliser lors du traitement.
 
 Notre système est réalisé à l'aide de Matlab. Le format d'entrée des données d'acquisition est fixé et n'est pas le sujet d'étude de ce compte-rendu. On s'attardera plutôt à détailler l'implémentation qui se décompose en plusieurs étapes distinctes : pré-traitement des données, étude des paramètres, décision.
 
@@ -114,39 +49,56 @@ Notre système est réalisé à l'aide de Matlab. Le format d'entrée des donné
 
 Afin de palier aux problèmes qui se présentent lorsque nous étudions des signatures obtenues dans des conditions différentes (résolution ou temps d'échantillonnage différents pour chaque tablette, état d'esprit de l'utilisateur, ...), il est important de normaliser les données.
 
-Pour ce faire, nous souhaitons en premier lieu trouver le barycentre de chaque signature et le placer à l'origine du repère. Il faut ensuite s'assurer que les dimensions des signatures soient dans le même ordre de grandeur. Enfin, effectuer une rotation des signatures de façon à ce que l'axe d'inertie soit le même pour toutes, horizontal.
+Pour ce faire, nous souhaitons en premier lieu trouver le barycentre de chaque signature et le placer à l'origine du repère. Il faut ensuite s'assurer que les dimensions des signatures soient du même ordre de grandeur. Enfin, on effectue une rotation des signatures de façon à ce que l'axe d'inertie soit le même pour toutes, horizontal.
 
-\section{Réduction des points}
+\section{Réduction du nombre de points}
 
 De façon à supprimer le bruit et à accélérer (voire améliorer) le traitement, il est intéressant de réduire le nombre de points utilisés. Ici nous utilisons la méthode de la vitesse minimale qui nous permet de sélectionner des points qui préservent la forme et la dimension de la signature tout en supprimant les informations superflues.
+
 La sélection de ces points se fait sur une étude de voisinage. Le point se trouvant à l'angle le plus aiguë dans un ensemble de points contigus est gardé tandis que les autres sont mis de côtés.
 
 \part{Paramètres retenus pour la discrimination}
 
 \section{Dynamic Time Warping}
 
-C'est une méthode consistant à calculer la distance entre deux séries de valeurs. Elle est majoritairement utilisé dans le domaine de la reconnaissance de la parole mais dans notre cas, nous avons utilisé cette méthode pour calculer la distance entre les deux signatures que nous avions en entrée à partir de composantes extraites de ces images. \\
+La DTW est une méthode consistant à calculer la distance entre deux séries de valeurs. Elle est majoritairement utilisée dans le domaine de la reconnaissance de la parole mais dans notre cas, nous l'utilisons pour calculer la distance entre deux signatures.
 
-Nous avons préféré utiliser cette méthode plutôt que celle des HMM ou des GMM car d'après ce que nous avons pu trouvé lors de nos recherches, c'était celle-ci qui revenait le plus souvent comme la plus efficiente pour comparer deux signatures pouvant ne pas avoir le même nombre de points. La distance qui nous est renvoyé par notre DTW est partis prenante dans le choix que nous faisons ensuite pour dire si oui ou non les deux signatures appartiennent à la même personne ou non puisque nous avons remarqué empiriquement que cette distance est plus représentative de la personne qui a fait la signature que les autres caractéristiques que l'on pouvait extraire mais également parce que nos recherches nous ont conduit à confirmer cette information. Néanmoins, dans certains cas, cette distance n'est pas suffisante et il faut donc utiliser d'autres informations que celle-ci pour la comparaison.
+Nous avons préféré utiliser cette méthode plutôt que celle des HMM ou des GMM car d'après ce que nous avons pu trouver lors de nos recherches, c'était celle-ci qui revenait le plus souvent comme la plus efficace pour comparer deux signatures qui n'ont pas forcément le même nombre de points.
+
+La distance renvoyée par notre calcul de DTW est majoritairement prise en compte lors de la décision, puisque nous avons observé qu'elle donne de bons résultats (c'est-à-dire qu'elle est faible pour deux signatures de la même personne et plus élevée dans le cas d'un faux). Néanmoins, dans certains cas, cette distance n'est pas suffisante et il nous faut donc utiliser d'autres informations pour comparer deux signatures.
+
+\section{Distance curviligne}
+
+La distance curviligne permet de rendre compte du \og rythme \fg du tracé, indépendamment de la vitesse d'écriture. Pour cela on mesure la distance parcourue sur la durée totale d'acquisition.
 
 \section{Dimension fractale}
-La signature d'un individu est caractérisée par de multiple éléments qui ne sont pas discernables à l'œil nu.\\
 
-Pour extraire ces caractéristiques, on peut calculer la dimension fractale qui, d'après la définition, permet d'obtenir une grandeur qui va traduire la façon dont un ensemble va remplir l'espace.\\
+La signature d'un individu est caractérisée par de multiples éléments qui ne sont pas discernables à l'œil nu. Pour extraire ces caractéristiques, on peut calculer la dimension fractale qui, d'après la définition, permet d'obtenir une grandeur qui traduit la façon dont un ensemble remplit l'espace. De plus, selon Mandelbrot, la dimension fractale permet de quantifier la complexité d'une courbe. C'est cette dernière qui nous intéresse pour la reconnaissance de signature.
 
-De plus, selon Mandelbrot, la dimension fractale permet de quantifier la complexité d'une courbe. C'est cette dernière qui nous intéresse pour la reconnaissance de signature.\\
+Il existe de multiple définitions de cette dimension ; nous avons implémenté dans notre système la version de Minkowski-Bouligand, aussi appelée "Box-Counting". Cette technique est la plus utilisée et permet de mesurer numériquement la dimension fractale.
 
-Il existe de multiple définitions de cette dimension, Hausdorff, homothétie, Minkowski-Bouligand. C'est cette dernière que nous utilisons, elle est aussi appelée "Box-Counting".\\
+%\vspace{0.3cm}
+%\begin{center}
+%\Ovalbox{$D_{box} = \lim\limits_{\epsilon \rightarrow 0}(\frac{log N(\epsilon)}{log N(1/\epsilon)})$ avec $N(\epsilon)$ nombre d'élément de diamètre $\epsilon$}
+%\end{center}
 
-Cette technique est la plus utilisée et permet de mesurer numériquement la dimension fractale. Cela se fait via la formule suivante:
+\section{Pression moyenne}
 
-\vspace{0.3cm}
-\begin{center}
-\Ovalbox{$D_{box} = \lim\limits_{\epsilon \rightarrow 0}(\frac{log N(\epsilon)}{log N(1/\epsilon)})$ avec $N(\epsilon)$ nombre d'élément de diamètre $\epsilon$}
-\end{center}
-
+L'avantage d'une signature numérique par rapport à une signature sur papier est de pouvoir extraire la pression exercée par l'utilisateur lors du tracé. Nous avons constaté que celle-ci pouvait être suffisamment caractéristique de la personne pour être prise en compte lors de la décision.
 
 \part{Décision}
+
+\`A partir des paramètres énoncés précédemment, il nous est possible de comparer deux signatures sur leurs différentes caractéristiques. Il s'agit alors de prendre une décision, c'est-à-dire renvoyer True si on considère que les signatures appartiennent à la même personne ou False dans le cas contraire.
+
+Notre première idée était de former une combinaison linéaire des valeurs renvoyées pour chaque caractéristique (en comparant les valeurs, sauf pour la DTW qui est déjà une comparaison) en pondérant de manière forte la DTW, puis de fixer un seuil arbitraire sur la valeur pour décider d'un rejet ou d'une acceptation, seuil que nous aurions fixé en observant les résultats sur les sets d'entraînements à notre disposition.
+
+Cependant, nous avons constaté que les valeurs à combiner n'ont pas toutes le même ordre de grandeur ; en outre il n'est pas possible de les normaliser si l'on ne dispose pas d'un set important.
+
+Pour cette raison nous avons choisi de fixer plutôt un seuil par caractéristique, afin de prendre une décision pour chaque caractéristique, non booléenne mais normalisée entre 0 et 1. Ensuite, nous combinerons linéairement ces valeurs et la décision se fera sur le résultat global, à partir d'un nouveau seuil.
+
+Les seuils pour chaque caractéristiques seront déterminés en se basant sur les sets que nous avons à disposition. Nous lancerons ensuite un algorithme de type métaheuristique pour déterminer quelle combinaison linéaire est la mieux adaptée, enfin un autre algorithme du même type permettra de déterminer le seuil à fixer pour obtenir une erreur la plus faible possible.
+
+En ce qui concerne les erreurs obtenues, on préfèrera minimiser les \og faux rejets \fg plutôt que les \og fausses acceptations \fg ; afin que le système soit utilisable l'objectif est de ne pas dépasser 2 \% de faux rejets.
 
 
 \end{document}
