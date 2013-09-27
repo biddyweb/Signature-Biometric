@@ -1,5 +1,4 @@
 function testDecision(set)
-
     file = 'USER';
     other = set + 2;
     if other > 5
