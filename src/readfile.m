@@ -9,6 +9,8 @@ function [C] = readfile( name )
             C(i,j)=temp{j};
         end
     end
+    %plot(C(:,1),C(:,2));
+    %figure;
     fclose(fid);
 end
 

@@ -3,13 +3,13 @@ function [] = main(file1, file2)
     mat = readfile(file1);
     
     % Plot the point cloud, unchanged
-    subplot(2, 2, 1), plot(mat(:,1), mat(:,2),'.');
-    title('File 1');
-    hold on;
+    %subplot(2, 2, 1), plot(mat(:,1), mat(:,2),'.');
+    %title('File 1');
+    %hold on;
     
     mat = moindreCarre(mat);
     data1 = translate(mat);
-    [n2,r2] = boxcount(data1,'slope');
+    [n2,r2] = boxcount(data1);
     df = -diff(log(n2))./diff(log(r2));
     disp(['Fractal dimension, Df = ' num2str(mean(df(4:8))) ' +/- ' num2str(std(df(4:8)))]);
     % Display points after translation
@@ -32,13 +32,13 @@ function [] = main(file1, file2)
     mat = readfile(file2);
     
     % Plot the point cloud, unchanged
-    subplot(2, 2, 3), plot(mat(:,1), mat(:,2),'.');
-    title('File 2');
-    hold on;
+    %subplot(2, 2, 3), plot(mat(:,1), mat(:,2),'.');
+    %title('File 2');
+    %hold on;
     
     mat = moindreCarre(mat);
     data2 = translate(mat);
-    [n2,r2] = boxcount(data2,'slope');
+    [n2,r2] = boxcount(data2);
     df = -diff(log(n2))./diff(log(r2));
     disp(['Fractal dimension, Df = ' num2str(mean(df(4:8))) ' +/- ' num2str(std(df(4:8)))]);
     % Display points after translation
@@ -80,9 +80,9 @@ function [] = main(file1, file2)
     fprintf('Distance: %i\n', dist2);
     fprintf('Distance cumul: %i\n', dist1+dist2+Dist);
     fprintf('Corel temp: %i\n', abs(correlTemp(data1)-correlTemp(data2)));
-    figure;
-    subplot(1, 2, 1);
-    plot(data1(:,1),data1(:,2));
-    subplot(1, 2, 2);
-    plot(data2(:,1),data2(:,2));
+    %figure;
+    %subplot(1, 2, 1);
+    %plot(data1(:,1),data1(:,2));
+    %subplot(1, 2, 2);
+    %plot(data2(:,1),data2(:,2));
 end
