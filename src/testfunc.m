@@ -5,7 +5,7 @@ function testfunc(nametrain, nametest)
     res2 = readtrainfile(nametest);
     [n2,m2] = size(res2);
     fid=fopen('score.txt', 'w');
-    score = 1000;
+    score = -1000,000000;
     decision = 't';
     for i=1:m2
         name = res2{i}{1};
@@ -15,7 +15,7 @@ function testfunc(nametrain, nametest)
         for j=1:n1
             main(name, l{j});
         end
-        fprintf(fid,'%s %s %d %s\n',name, id, score, decision); 
+        fprintf(fid,'%s %s %f %s\n',name, id, score, decision); 
     end
 
 end
