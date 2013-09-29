@@ -1,33 +1,32 @@
-function testDecision(set)
-
+function [DTW, curv, frac, press] = testDecision(set)
     file = 'USER';
     other = set + 2;
     if other > 5
         other = other - 5;
     end
-    
+
     % dtw
     % fractal dim
     % length
     % curviline distances
     % pressure
     % diffRapport
-    
+
     res_DTW = zeros(1, 1);
     res_fractalDimension = zeros(1, 1);
-    res_traitLength = zeros(1, 1);
+    %res_traitLength = zeros(1, 1);
     res_curvDistance = zeros(1, 1);
     res_pressure = zeros(1, 1);
-    res_xy = zeros(1, 1);
-    
+    %res_xy = zeros(1, 1);
+
     type = zeros(1, 1);
     index = 1;
-    
+
     %%%% params
     correctNb = 20;
-    wrongNb = 20;
-    otherNb = 10;
-    
+    wrongNb = 0;
+    otherNb = 0;
+
     for i=1:20
         i
         for j=(21 - correctNb):(20 + wrongNb + otherNb)
@@ -127,23 +126,29 @@ function testDecision(set)
             %drawnow;
             %clf reset;
             %diffFrac = abs(fracDim1 - fracDim2);
-            
+
             res_DTW(index) = Dist;
             res_fractalDimension(index) = abs(fracDim1 - fracDim2);
-            res_traitLength(index) = abs(distTrait1-distTrait2);
+            %res_traitLength(index) = abs(distTrait1-distTrait2);
             res_curvDistance(index) = distancecurv(data1,data2,distTrait1,distTrait2);
             res_pressure(index) = abs(pres1-pres2);
-            res_xy(index) = abs(distrapp1-distrapp2);
-            
+            %res_xy(index) = abs(distrapp1-distrapp2);
+
             index = index + 1;
         end
     end
 
+    DTW = mean(res_DTW(find(type == 1)));
+curv = mean(res_curvDistance(find(type == 1)));
+frac = mean(res_fractalDimension(find(type == 1)));
+press = mean(res_pressure(find(type == 1)));
+return;
+
     % printing results
-    
+
     %res = [res_DTW', res_fractalDimension', res_traitLength', res_curvDistance', res_pressure', res_xy'];
     %coeffs = [0.1, 0.5, 0.1, 0.1, 0.1, 0.1];
-    
+
     %norms = mean(res)f
     %rn = zeros(size(res))
     %for k=1:size(res, 2)
@@ -164,7 +169,7 @@ function testDecision(set)
     plot(find(type == 0), res_DTW(find(type == 0)), '+r');
     plot(find(type == 2), res_DTW(find(type == 2)), '+c');
     hold off;
-    
+
     subplot(2, 3, 2);
     hold on;
     title(strcat('fractalDimension: ', num2str(mean(res_fractalDimension(find(type == 1))))));
@@ -172,7 +177,7 @@ function testDecision(set)
     plot(find(type == 0), res_fractalDimension(find(type == 0)), '+r');
     plot(find(type == 2), res_fractalDimension(find(type == 2)), '+c');
     hold off;
-    
+
     subplot(2, 3, 3);
     hold on;
     title(strcat('trait length: ', num2str(mean(res_traitLength(find(type == 1))))));
@@ -180,15 +185,15 @@ function testDecision(set)
     plot(find(type == 0), res_traitLength(find(type == 0)), '+r');
     plot(find(type == 2), res_traitLength(find(type == 2)), '+c');
     hold off;
-    
-    subplot(2, 3, 4); 
+
+    subplot(2, 3, 4);
     hold on;
     title(strcat('curviline distance: ', num2str(mean(res_curvDistance(find(type == 1))))));
     plot(find(type == 1), res_curvDistance(find(type == 1)), '+g');
     plot(find(type == 0), res_curvDistance(find(type == 0)), '+r');
     plot(find(type == 2), res_curvDistance(find(type == 2)), '+c');
     hold off;
-    
+
     subplot(2, 3, 5);
     hold on;
     title(strcat('pressure: ', num2str(mean(res_pressure(find(type == 1))))));
@@ -196,7 +201,7 @@ function testDecision(set)
     plot(find(type == 0), res_pressure(find(type == 0)), '+r');
     plot(find(type == 2), res_pressure(find(type == 2)), '+c');
     hold off;
-    
+
     subplot(2, 3, 6);
     hold on;
     title(strcat('x/y: ', num2str(mean(res_xy(find(type == 1))))));
@@ -205,7 +210,7 @@ function testDecision(set)
     plot(find(type == 2), res_xy(find(type == 2)), '+c');
     hold off;
     return
-    
+
     disp(['Corrects']);
     disp(['DTW: ' ...
         num2str(mean(res_DTW(find(type == 1)))) ...
@@ -269,7 +274,7 @@ function testDecision(set)
         ' - ' ...
         num2str(std(res_xy(find(type == 0))) / mean(res_xy(find(type == 0))))
         ])
-    
+
     disp(['Faux aléatoires']);
     disp(['DTW: ' ...
         num2str(mean(res_DTW(find(type == 2)))) ...
@@ -302,9 +307,9 @@ function testDecision(set)
         num2str(std(res_xy(find(type == 2))) / mean(res_xy(find(type == 2))))
         ])
 
-    
+
     return
-    
+
     %hold on;
     %for k=1:size(res, 1)
         %rn = res(k, :) ./ max(abs(res(k, :))); % normalization
@@ -325,11 +330,11 @@ function testDecision(set)
 %                rw = rw + 1;
 %            end
 %        end
-%    end    
-    
+%    end
+
     %[~, i] = sort(trues, 'descend');
     %V = trues(i(ceil(2 * size(i, 2) / 100)));
-        
+
     %err = 0;
     %wrongs_sorted = sort(wrongs);
     %for n=1:size(wrongs, 2)
@@ -338,7 +343,7 @@ function testDecision(set)
     %      break;
     %   end
     %end
-   
+
     %line(xlim, [V V]);
     %V
     %err
