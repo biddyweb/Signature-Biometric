@@ -30,9 +30,10 @@ function [total_err, coeff] = settings()
   frac_floor = 0.0184;
   press_floor = 48.9787;
 
-  %coeff = [0.1, 0.2, 0.2, 0.5];
-  coeff = rand(1, 4);
-  coeff = coeff / sum(coeff);  
+  coeff = [0.222, 0.1678, 0.2531, 0.3571];
+  sumV = 0;
+  %coeff = rand(1, 4);
+  %coeff = coeff / sum(coeff);  
  
   total_err = 0;
   
@@ -120,8 +121,10 @@ function [total_err, coeff] = settings()
 
         trues = score(find(type == 1));
         trues = sort(trues);
+
         
-        V = trues(ceil(2 * size(trues, 2) / 100));
+        V = trues(ceil(2 * size(trues, 2) / 100))
+        sumV = sumV + V;
         
         wrongs = score(find(type == 0 | type == 2));
         err = 100 * size(find(wrongs >= V), 2) / size(wrongs, 2);
