@@ -139,10 +139,10 @@ function [DTW, curv, frac, press] = testDecision(set)
     end
 
     DTW = mean(res_DTW(find(type == 1)));
-curv = mean(res_curvDistance(find(type == 1)));
-frac = mean(res_fractalDimension(find(type == 1)));
-press = mean(res_pressure(find(type == 1)));
-return;
+    curv = mean(res_curvDistance(find(type == 1)));
+    frac = mean(res_fractalDimension(find(type == 1)));
+    press = mean(res_pressure(find(type == 1)));
+    return;
 
     % printing results
 
