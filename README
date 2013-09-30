@@ -58,15 +58,15 @@ formaté de la manière suivante :
 
 ---- score.txt -------
 file score t
-file score w
-file score t
+file score f
+file score f
 ----------------------
 où file est le nom du fichier de signature testé, score le
 score de comparaison avec la référence (une ou plusieurs
-signatures de références) et enfin t ou w indiquant la
+signatures de références) et enfin t ou f indiquant la
 décision finale :
 
 * t : la signature est correcte (même personne que la réfé-
       rence)
-* w : la signature est fausse (imitation ou mauvaise
+* f : la signature est fausse (imitation ou mauvaise
       personne)
