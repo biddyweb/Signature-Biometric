@@ -19,7 +19,6 @@ function testfunc(nametrain, nametest)
         end
         score = scores / m1;
         
-        % fixme: interval
         if score >= decisionFloor
             decision = 't';
         else
