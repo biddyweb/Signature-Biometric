@@ -1,7 +1,7 @@
 function testfunc(nametrain, nametest)
     load(nametrain);
     res2 = readtrainfile(nametest);
-    [n2,m2] = size(res2);
+    [~, m2] = size(res2);
     fid=fopen('score.txt', 'w');
     decisionFloor = -0.7507;
     caracFloors = [1.4130e+07, 1.3437e+03, 0.0184, 48.9787];
@@ -11,13 +11,13 @@ function testfunc(nametrain, nametest)
         name = res2{i}{1};
         id = res2{i}{2};
         l = map(id);
-        [n1,m1] = size(l);
+        [~, m1] = size(l);
         
         scores = 0;
-        for j=1:n1
+        for j=1:m1
             scores = scores + getScore(name, l{j}, coeff, caracFloors);
         end
-        score = scores / n1;
+        score = scores / m1;
         
         % fixme: interval
         if score >= decisionFloor
