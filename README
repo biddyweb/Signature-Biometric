@@ -1,0 +1,72 @@
+TRPA: reconnaissance de signatures numériques
+=============================================
+
+Ce projet est implémenté en Matlab ; les sources se situent
+dans le dossier src/ (dossier à ajouter au path de Matlab).
+
+Deux fonctions sont à utiliser :
+
+=== TRAIN =======
+
+>> trainfunc(file)
+
+Permet de faire l'entraînement correspondant à l'enre-
+gistrement de signatures de références.
+
+Prend comme unique argument le nom du fichier d'entraîne-
+ment (le nom de fichier est relatif au path de Matlab).Ce
+fichier doit respecter la syntaxe suivante :
+
+---- trainlst.txt ----
+REF1 file
+REF2 file1 file2
+REF3 file1 file2 file3 file4 file5
+----------------------
+où une référence peut être associée à autant de fichiers
+qu'on le souhaite (un exemple de fichier d'entraînement
+est disponible dans le dossier data/).
+
+Génère un fichier 'train.mat' dans le dossier courant,
+qui sera utilisé pour le test.
+
+=== TEST =======
+
+>> testfunc(train, file)
+
+Teste un jeu de signatures par rapport aux références.
+
+Prend comme premier argument le fichier d'entraînement gé-
+néré par la fonction précédente.
+
+Prend comme second argument le nom du fichier de test (le
+nom de fichier est relatif au path de Matlab). Ce fichier
+doit respecter la syntaxe suivante :
+
+---- testlst.txt ----
+file REF
+file REF
+file REF
+----------------------
+où pour chaque ligne, file est un fichier de signature et
+REF une référence dans le fichier d'entraînement (un
+exemple de fichier de test est disponible dans le dossier
+data/).
+
+Génère un fichier 'score.txt' dans le dossier courant, qui
+contient une ligne pour chacun des tests demandés et est
+formaté de la manière suivante :
+
+---- score.txt -------
+file score t
+file score w
+file score t
+----------------------
+où file est le nom du fichier de signature testé, score le
+score de comparaison avec la référence (une ou plusieurs
+signatures de références) et enfin t ou w indiquant la
+décision finale :
+
+* t : la signature est correcte (même personne que la réfé-
+      rence)
+* w : la signature est fausse (imitation ou mauvaise
+      personne)
