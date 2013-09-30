@@ -57,14 +57,14 @@ contient une ligne pour chacun des tests demandés et est
 formaté de la manière suivante :
 
 ---- score.txt -------
-file score t
-file score f
-file score f
+file REF score t
+file REF score f
+file REF score f
 ----------------------
 où file est le nom du fichier de signature testé, score le
-score de comparaison avec la référence (une ou plusieurs
-signatures de références) et enfin t ou f indiquant la
-décision finale :
+score de comparaison avec la référence REF (une ou plu-
+sieurs signatures de références) et enfin t ou f indiquant
+la décision finale :
 
 * t : la signature est correcte (même personne que la réfé-
       rence)
