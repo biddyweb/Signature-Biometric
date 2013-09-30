@@ -3,7 +3,10 @@ function testfunc(nametrain, nametest)
 %   Detailed explanation goes here
     load(nametrain);
     res2 = readtrainfile(nametest);
-    [n2,m2] = size(res2);   
+    [n2,m2] = size(res2);
+    fid=fopen('score.txt', 'w');
+    score = -1000,000000;
+    seuil = 3;
     for i=1:m2
         name = res2{i}{1};
         id = res2{i}{2};
@@ -12,6 +15,12 @@ function testfunc(nametrain, nametest)
         for j=1:n1
             main(name, l{j});
         end
+        if score > seuil
+            decision = 't';
+        else
+            decision = 'f';
+        end
+        fprintf(fid,'%s %s %f %s\n',name, id, score, decision); 
     end
 
 end
